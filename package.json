@@ -1,0 +1,9 @@
+{
+  "name": "passive-cable-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A browser-local passive cable model and interactive tree demonstration.",
+  "scripts": {"test": "node tests/engine.test.mjs", "serve": "python3 -m http.server 8080 --directory docs"},
+  "engines": {"node": ">=18"}
+}
