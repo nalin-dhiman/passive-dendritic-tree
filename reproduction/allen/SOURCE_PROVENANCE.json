@@ -1,0 +1,17 @@
+{
+  "numerical_engine": "engine.py retains the model equations and numerical engine byte-for-byte.",
+  "adapter": "run.py provides portable paths, source selection, numerical analyses, complete output inventories and comparison against fixed numerical reference fixtures.",
+  "geometry_selection": "Largest basal primary subtree by baseline modeled volume; physical ports selected geometrically before electrical solutions.",
+  "reference_data": "Fixed complex impedance matrices, voltage traces and scalar expected values; not required to generate the fresh model solutions.",
+  "source_hashes": {
+    "reproduction/allen/engine.py": "4d54f9df9abd13bbe963ddbcc6628664dd06e3ae612e8532cf62a29dbd93569c",
+    "reproduction/allen/run.py": "b5711d3155c933863cdb646834faa21f89be895626a4e3b72da93d707212897d",
+    "reproduction/allen/config.json": "d929bba229e710c843f3bdafa0ac99140d367ee4e8814c97da86451d7691fffa",
+    "reproduction/allen/data/588402092.swc": "8d3c5fc12fbee445d8cdbe3a2281029e4f87b219689856477e82e60f46d29bb9",
+    "reproduction/allen/data/SOURCE.json": "5df1d82be82685bcd196d5e039ef6a7ad17f154a228a42ef1a7fd9be0ab0b99c",
+    "reproduction/reference/allen_expected.json": "e0f259f036b1f32de8e128639b8b9de38c44d7892a5e3916186270c8c10da3a3",
+    "reproduction/reference/allen_impedance.npz": "497980a8569b762c434040d601de3bbd8208b84250790f28126d8a5139e56128",
+    "reproduction/reference/allen_transients.npz": "77bf1431859609d1ad03884b7682a510602bce1e4de54179fe3cfb7e96f5db95"
+  },
+  "preserved_failed_criterion": "Distal rectangular-current temporal accuracy: final-pair discrepancy must be <=0.0025 mV; the fixed experiment fails this criterion."
+}

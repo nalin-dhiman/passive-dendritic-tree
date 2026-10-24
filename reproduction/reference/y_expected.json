@@ -1,0 +1,2700 @@
+{
+  "schema_version": 1,
+  "conditions": {
+    "baseline_nominal": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012525736479197002,
+        "48": 0.00013921642853476893,
+        "144": 1.5469002446685074e-05
+      },
+      "comparison": {
+        "geometry": "baseline",
+        "setting": "nominal",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.0001237520195734806,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.0001237520195734806,
+        "gain_ports_upper": 0.0001237520195734806,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "baseline_ra_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0011383025485039071,
+        "48": 0.00012651305640648576,
+        "144": 1.4057436865534743e-05
+      },
+      "comparison": {
+        "geometry": "baseline",
+        "setting": "ra_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00011245949492427794,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00011245949492427794,
+        "gain_ports_upper": 0.00011245949492427794,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "baseline_ra_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.00136446334712644,
+        "48": 0.00015165542984694615,
+        "144": 1.6851197475009098e-05
+      },
+      "comparison": {
+        "geometry": "baseline",
+        "setting": "ra_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00013480957980007278,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00013480957980007278,
+        "gain_ports_upper": 0.00013480957980007278,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "baseline_gm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 5.881061447520093,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012509545131069294,
+        "48": 0.00013903315164833372,
+        "144": 1.5448596171605418e-05
+      },
+      "comparison": {
+        "geometry": "baseline",
+        "setting": "gm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00012358876937284334,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00012358876937284334,
+        "gain_ports_upper": 0.00012358876937284334,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "baseline_gm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 7.187963991413446,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012545096659799127,
+        "48": 0.00013943494501937495,
+        "144": 1.5493323375270865e-05
+      },
+      "comparison": {
+        "geometry": "baseline",
+        "setting": "gm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00012394658700216692,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00012394658700216692,
+        "gain_ports_upper": 0.00012394658700216692,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "baseline_cm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 58.81061447520093,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0011398393283719307,
+        "48": 0.00012668686850954636,
+        "144": 1.4076788061191804e-05
+      },
+      "comparison": {
+        "geometry": "baseline",
+        "setting": "cm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00011261430448953443,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00011261430448953443,
+        "gain_ports_upper": 0.00011261430448953443,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "baseline_cm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 71.87963991413447,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0013624082801213294,
+        "48": 0.0001514233638785257,
+        "144": 1.6825366696306206e-05
+      },
+      "comparison": {
+        "geometry": "baseline",
+        "setting": "cm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00013460293357044965,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00013460293357044965,
+        "gain_ports_upper": 0.00013460293357044965,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "unchanged_nominal": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012525736479197002,
+        "48": 0.00013921642853476893,
+        "144": 1.5469002446685074e-05
+      },
+      "comparison": {
+        "geometry": "unchanged",
+        "setting": "nominal",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.0001237520195734806,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.0001237520195734806,
+        "gain_ports_upper": 0.0001237520195734806,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "unchanged_ra_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0011383025485039071,
+        "48": 0.00012651305640648576,
+        "144": 1.4057436865534743e-05
+      },
+      "comparison": {
+        "geometry": "unchanged",
+        "setting": "ra_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00011245949492427794,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00011245949492427794,
+        "gain_ports_upper": 0.00011245949492427794,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "unchanged_ra_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.00136446334712644,
+        "48": 0.00015165542984694615,
+        "144": 1.6851197475009098e-05
+      },
+      "comparison": {
+        "geometry": "unchanged",
+        "setting": "ra_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00013480957980007278,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00013480957980007278,
+        "gain_ports_upper": 0.00013480957980007278,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "unchanged_gm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 5.881061447520093,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012509545131069294,
+        "48": 0.00013903315164833372,
+        "144": 1.5448596171605418e-05
+      },
+      "comparison": {
+        "geometry": "unchanged",
+        "setting": "gm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00012358876937284334,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00012358876937284334,
+        "gain_ports_upper": 0.00012358876937284334,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "unchanged_gm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 65.3451271946677,
+        "leak_conductance_nS": 7.187963991413446,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012545096659799127,
+        "48": 0.00013943494501937495,
+        "144": 1.5493323375270865e-05
+      },
+      "comparison": {
+        "geometry": "unchanged",
+        "setting": "gm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00012394658700216692,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00012394658700216692,
+        "gain_ports_upper": 0.00012394658700216692,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "unchanged_cm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 58.81061447520093,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0011398393283719307,
+        "48": 0.00012668686850954636,
+        "144": 1.4076788061191804e-05
+      },
+      "comparison": {
+        "geometry": "unchanged",
+        "setting": "cm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00011261430448953443,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00011261430448953443,
+        "gain_ports_upper": 0.00011261430448953443,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "unchanged_cm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6534.512719466769,
+        "volume_um3": 2865.1325000738916,
+        "capacitance_pF": 71.87963991413447,
+        "leak_conductance_nS": 6.53451271946677,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.8,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          2010.6192982974676,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          804.2477193189872,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.2807017543859645,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0013624082801213294,
+        "48": 0.0001514233638785257,
+        "144": 1.6825366696306206e-05
+      },
+      "comparison": {
+        "geometry": "unchanged",
+        "setting": "cm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.0,
+        "material_PASS": false,
+        "gain_root_raw": 0.0,
+        "gain_ports_raw": 0.0,
+        "response_relative_raw": 0.0,
+        "gain_allocation_max": 0.00013460293357044965,
+        "response_relative_allocation_max": 0.0,
+        "gain_root_upper": 0.00013460293357044965,
+        "gain_ports_upper": 0.00013460293357044965,
+        "response_relative_upper": 0.0,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "PASS",
+        "gain_max_frequency_index": 100,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.0
+      }
+    },
+    "disruptive_nominal": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 4574.15890362674,
+        "volume_um3": 1403.9149250362068,
+        "capacitance_pF": 45.7415890362674,
+        "leak_conductance_nS": 4.57415890362674,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.7,
+          0.56,
+          0.56
+        ],
+        "section_area_um2": [
+          1759.291886010284,
+          1407.4335088082275,
+          1407.4335088082275
+        ],
+        "section_volume_um3": [
+          615.7521601035994,
+          394.08138246630375,
+          394.08138246630375
+        ],
+        "surface_to_volume_per_um": 3.258145363408522,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001725141321323159,
+        "48": 0.00019175558846654356,
+        "144": 2.1307072387964842e-05
+      },
+      "comparison": {
+        "geometry": "disruptive",
+        "setting": "nominal",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.51,
+        "material_PASS": true,
+        "gain_root_raw": 0.6836254590028527,
+        "gain_ports_raw": 0.7226616680946606,
+        "response_relative_raw": 1.0495304661417202,
+        "gain_allocation_max": 0.00020467838556225505,
+        "response_relative_allocation_max": 7.096413335030204e-05,
+        "gain_root_upper": 0.6837983955975768,
+        "gain_ports_upper": 0.7227906749778429,
+        "response_relative_upper": 1.0495415894861064,
+        "root_GAIN": "FAIL",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 59,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 2.4932441179900784
+      }
+    },
+    "disruptive_ra_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 4574.15890362674,
+        "volume_um3": 1403.9149250362068,
+        "capacitance_pF": 45.7415890362674,
+        "leak_conductance_nS": 4.57415890362674,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.7,
+          0.56,
+          0.56
+        ],
+        "section_area_um2": [
+          1759.291886010284,
+          1407.4335088082275,
+          1407.4335088082275
+        ],
+        "section_volume_um3": [
+          615.7521601035994,
+          394.08138246630375,
+          394.08138246630375
+        ],
+        "surface_to_volume_per_um": 3.258145363408522,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001568832498472352,
+        "48": 0.00017437658430495824,
+        "144": 1.9375934414202945e-05
+      },
+      "comparison": {
+        "geometry": "disruptive",
+        "setting": "ra_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.51,
+        "material_PASS": true,
+        "gain_root_raw": 0.6847729244334302,
+        "gain_ports_raw": 0.7250178633591439,
+        "response_relative_raw": 1.0518638470954724,
+        "gain_allocation_max": 0.00018678452836069808,
+        "response_relative_allocation_max": 6.416645788298238e-05,
+        "gain_root_upper": 0.6849436514827796,
+        "gain_ports_upper": 0.7251454257608833,
+        "response_relative_upper": 1.0518738849022051,
+        "root_GAIN": "FAIL",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 65,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 2.400700080081111
+      }
+    },
+    "disruptive_ra_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 4574.15890362674,
+        "volume_um3": 1403.9149250362068,
+        "capacitance_pF": 45.7415890362674,
+        "leak_conductance_nS": 4.57415890362674,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.7,
+          0.56,
+          0.56
+        ],
+        "section_area_um2": [
+          1759.291886010284,
+          1407.4335088082275,
+          1407.4335088082275
+        ],
+        "section_volume_um3": [
+          615.7521601035994,
+          394.08138246630375,
+          394.08138246630375
+        ],
+        "surface_to_volume_per_um": 3.258145363408522,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0018820738004877847,
+        "48": 0.0002092050248478193,
+        "144": 2.3246049625855702e-05
+      },
+      "comparison": {
+        "geometry": "disruptive",
+        "setting": "ra_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.51,
+        "material_PASS": true,
+        "gain_root_raw": 0.6825784306010437,
+        "gain_ports_raw": 0.7204732707284757,
+        "response_relative_raw": 1.047313842599483,
+        "gain_allocation_max": 0.00022247918031418064,
+        "response_relative_allocation_max": 7.769392297521084e-05,
+        "gain_root_upper": 0.6827547209005467,
+        "gain_ports_upper": 0.7206036088611238,
+        "response_relative_upper": 1.0473260540015308,
+        "root_GAIN": "FAIL",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 54,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 2.585540355758293
+      }
+    },
+    "disruptive_gm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 4574.15890362674,
+        "volume_um3": 1403.9149250362068,
+        "capacitance_pF": 45.7415890362674,
+        "leak_conductance_nS": 4.116743013264066,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.7,
+          0.56,
+          0.56
+        ],
+        "section_area_um2": [
+          1759.291886010284,
+          1407.4335088082275,
+          1407.4335088082275
+        ],
+        "section_volume_um3": [
+          615.7521601035994,
+          394.08138246630375,
+          394.08138246630375
+        ],
+        "surface_to_volume_per_um": 3.258145363408522,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001720636450461356,
+        "48": 0.0001912480238287851,
+        "144": 2.125058774803922e-05
+      },
+      "comparison": {
+        "geometry": "disruptive",
+        "setting": "gm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.51,
+        "material_PASS": true,
+        "gain_root_raw": 0.6847729244334307,
+        "gain_ports_raw": 0.7250097359016763,
+        "response_relative_raw": 1.0518638470954749,
+        "gain_allocation_max": 0.0002041917897380753,
+        "response_relative_allocation_max": 7.094505300107681e-05,
+        "gain_root_upper": 0.6849436514616499,
+        "gain_ports_upper": 0.7251383199668742,
+        "response_relative_upper": 1.0518738848989786,
+        "root_GAIN": "FAIL",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 59,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 2.6674445334234544
+      }
+    },
+    "disruptive_gm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 4574.15890362674,
+        "volume_um3": 1403.9149250362068,
+        "capacitance_pF": 45.7415890362674,
+        "leak_conductance_nS": 5.031574793989414,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.7,
+          0.56,
+          0.56
+        ],
+        "section_area_um2": [
+          1759.291886010284,
+          1407.4335088082275,
+          1407.4335088082275
+        ],
+        "section_volume_um3": [
+          615.7521601035994,
+          394.08138246630375,
+          394.08138246630375
+        ],
+        "surface_to_volume_per_um": 3.258145363408522,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0017300134002674467,
+        "48": 0.0001923040174261835,
+        "144": 2.136809636176337e-05
+      },
+      "comparison": {
+        "geometry": "disruptive",
+        "setting": "gm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.51,
+        "material_PASS": true,
+        "gain_root_raw": 0.682575454122644,
+        "gain_ports_raw": 0.7204797814700384,
+        "response_relative_raw": 1.0473138425994837,
+        "gain_allocation_max": 0.0002052086134058895,
+        "response_relative_allocation_max": 7.100204915431032e-05,
+        "gain_root_upper": 0.682752464683312,
+        "gain_ports_upper": 0.7206113273666672,
+        "response_relative_upper": 1.047326054002537,
+        "root_GAIN": "FAIL",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 60,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 2.350491232507549
+      }
+    },
+    "disruptive_cm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 4574.15890362674,
+        "volume_um3": 1403.9149250362068,
+        "capacitance_pF": 41.16743013264066,
+        "leak_conductance_nS": 4.57415890362674,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.7,
+          0.56,
+          0.56
+        ],
+        "section_area_um2": [
+          1759.291886010284,
+          1407.4335088082275,
+          1407.4335088082275
+        ],
+        "section_volume_um3": [
+          615.7521601035994,
+          394.08138246630375,
+          394.08138246630375
+        ],
+        "surface_to_volume_per_um": 3.258145363408522,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001573143162767158,
+        "48": 0.00017486188341155477,
+        "144": 1.9429934468948334e-05
+      },
+      "comparison": {
+        "geometry": "disruptive",
+        "setting": "cm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.51,
+        "material_PASS": true,
+        "gain_root_raw": 0.6836257649161442,
+        "gain_ports_raw": 0.7226622604689539,
+        "response_relative_raw": 1.0495304661417202,
+        "gain_allocation_max": 0.00018722059222843905,
+        "response_relative_allocation_max": 6.421182676966647e-05,
+        "gain_root_upper": 0.6838001468812563,
+        "gain_ports_upper": 0.7227920789517918,
+        "response_relative_upper": 1.0495415894856035,
+        "root_GAIN": "FAIL",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 66,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 2.4932441179900784
+      }
+    },
+    "disruptive_cm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 4574.15890362674,
+        "volume_um3": 1403.9149250362068,
+        "capacitance_pF": 50.31574793989414,
+        "leak_conductance_nS": 4.57415890362674,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.7,
+          0.56,
+          0.56
+        ],
+        "section_area_um2": [
+          1759.291886010284,
+          1407.4335088082275,
+          1407.4335088082275
+        ],
+        "section_volume_um3": [
+          615.7521601035994,
+          394.08138246630375,
+          394.08138246630375
+        ],
+        "surface_to_volume_per_um": 3.258145363408522,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0018770855603715898,
+        "48": 0.00020864299844494314,
+        "144": 2.3183505721679165e-05
+      },
+      "comparison": {
+        "geometry": "disruptive",
+        "setting": "cm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.51,
+        "material_PASS": true,
+        "gain_root_raw": 0.6836279996142184,
+        "gain_ports_raw": 0.7226622604689539,
+        "response_relative_raw": 1.0495304661417202,
+        "gain_allocation_max": 0.00022190784664213677,
+        "response_relative_allocation_max": 7.768031702494699e-05,
+        "gain_root_upper": 0.683801840049963,
+        "gain_ports_upper": 0.7227920789410748,
+        "response_relative_upper": 1.0495415894865503,
+        "root_GAIN": "FAIL",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 54,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 2.4932441179900784
+      }
+    },
+    "uniform_nominal": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6338.477337882767,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.38477337882767,
+        "leak_conductance_nS": 6.338477337882767,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.97,
+          0.776,
+          0.776
+        ],
+        "section_area_um2": [
+          2437.8758991856794,
+          1950.3007193485437,
+          1950.3007193485437
+        ],
+        "section_volume_um3": [
+          1182.3698111050544,
+          756.716679107235,
+          756.716679107235
+        ],
+        "surface_to_volume_per_um": 2.3512389220473864,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001287388585215052,
+        "48": 0.00014308683487406163,
+        "144": 1.589907359137758e-05
+      },
+      "comparison": {
+        "geometry": "uniform",
+        "setting": "nominal",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.04607779893155873,
+        "gain_ports_raw": 0.048134144107248984,
+        "response_relative_raw": 0.0635208150400265,
+        "gain_allocation_max": 0.0001283858115758747,
+        "response_relative_allocation_max": 2.6879833598434274e-06,
+        "gain_root_upper": 0.04619859211789132,
+        "gain_ports_upper": 0.04822426446144612,
+        "response_relative_upper": 0.06352123863869677,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 68,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.1690826187827058
+      }
+    },
+    "uniform_ra_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6338.477337882767,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.38477337882767,
+        "leak_conductance_nS": 6.338477337882767,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.97,
+          0.776,
+          0.776
+        ],
+        "section_area_um2": [
+          2437.8758991856794,
+          1950.3007193485437,
+          1950.3007193485437
+        ],
+        "section_volume_um3": [
+          1182.3698111050544,
+          756.716679107235,
+          756.716679107235
+        ],
+        "surface_to_volume_per_um": 2.3512389220473864,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0011704065813375212,
+        "48": 0.00013008198248519318,
+        "144": 1.4454005646833725e-05
+      },
+      "comparison": {
+        "geometry": "uniform",
+        "setting": "ra_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.04614831148269177,
+        "gain_ports_raw": 0.04826350267390456,
+        "response_relative_raw": 0.06361694581757465,
+        "gain_allocation_max": 0.00011672073937566849,
+        "response_relative_allocation_max": 2.427001445988968e-06,
+        "gain_root_upper": 0.04626503222206744,
+        "gain_ports_upper": 0.048352714206021906,
+        "response_relative_upper": 0.0636173294517447,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 75,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.16352787624172696
+      }
+    },
+    "uniform_ra_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6338.477337882767,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.38477337882767,
+        "leak_conductance_nS": 6.338477337882767,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.97,
+          0.776,
+          0.776
+        ],
+        "section_area_um2": [
+          2437.8758991856794,
+          1950.3007193485437,
+          1950.3007193485437
+        ],
+        "section_volume_um3": [
+          1182.3698111050544,
+          756.716679107235,
+          756.716679107235
+        ],
+        "surface_to_volume_per_um": 2.3512389220473864,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001402148038394467,
+        "48": 0.0001558449977598218,
+        "144": 1.731673237321804e-05
+      },
+      "comparison": {
+        "geometry": "uniform",
+        "setting": "ra_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.04600926677532129,
+        "gain_ports_raw": 0.04801257067746607,
+        "response_relative_raw": 0.06342732730205115,
+        "gain_allocation_max": 0.000139814313289841,
+        "response_relative_allocation_max": 2.9473851834501888e-06,
+        "gain_root_upper": 0.04613168882225838,
+        "gain_ports_upper": 0.04810347464290052,
+        "response_relative_upper": 0.06342779047304611,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 63,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.1746753154621957
+      }
+    },
+    "uniform_gm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6338.477337882767,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.38477337882767,
+        "leak_conductance_nS": 5.70462960409449,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.97,
+          0.776,
+          0.776
+        ],
+        "section_area_um2": [
+          2437.8758991856794,
+          1950.3007193485437,
+          1950.3007193485437
+        ],
+        "section_volume_um3": [
+          1182.3698111050544,
+          756.716679107235,
+          756.716679107235
+        ],
+        "surface_to_volume_per_um": 2.3512389220473864,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012855819873131755,
+        "48": 0.00014288251392619375,
+        "144": 1.5876325540519338e-05
+      },
+      "comparison": {
+        "geometry": "uniform",
+        "setting": "gm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.04615104825874301,
+        "gain_ports_raw": 0.048263822587248685,
+        "response_relative_raw": 0.06361694581757588,
+        "gain_allocation_max": 0.00012820984375077615,
+        "response_relative_allocation_max": 2.6857837296222574e-06,
+        "gain_root_upper": 0.04627023766584067,
+        "gain_ports_upper": 0.04835245873149182,
+        "response_relative_upper": 0.06361732944946225,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 67,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.18169764026859447
+      }
+    },
+    "uniform_gm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6338.477337882767,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.38477337882767,
+        "leak_conductance_nS": 6.972325071671044,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.97,
+          0.776,
+          0.776
+        ],
+        "section_area_um2": [
+          2437.8758991856794,
+          1950.3007193485437,
+          1950.3007193485437
+        ],
+        "section_volume_um3": [
+          1182.3698111050544,
+          756.716679107235,
+          756.716679107235
+        ],
+        "surface_to_volume_per_um": 2.3512389220473864,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012895159023563623,
+        "48": 0.00014332682471961572,
+        "144": 1.5925783176791764e-05
+      },
+      "comparison": {
+        "geometry": "uniform",
+        "setting": "gm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.04600940903836472,
+        "gain_ports_raw": 0.048012369726882005,
+        "response_relative_raw": 0.06342732730205085,
+        "gain_allocation_max": 0.0001285939732405664,
+        "response_relative_allocation_max": 2.6908883364605885e-06,
+        "gain_root_upper": 0.04613177775841262,
+        "gain_ports_upper": 0.04810376835476541,
+        "response_relative_upper": 0.06342779046985074,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 69,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.15879574132927185
+      }
+    },
+    "uniform_cm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6338.477337882767,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 57.0462960409449,
+        "leak_conductance_nS": 6.338477337882767,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.97,
+          0.776,
+          0.776
+        ],
+        "section_area_um2": [
+          2437.8758991856794,
+          1950.3007193485437,
+          1950.3007193485437
+        ],
+        "section_volume_um3": [
+          1182.3698111050544,
+          756.716679107235,
+          756.716679107235
+        ],
+        "surface_to_volume_per_um": 2.3512389220473864,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0011721104637154379,
+        "48": 0.00013027455480765332,
+        "144": 1.4475443257033403e-05
+      },
+      "comparison": {
+        "geometry": "uniform",
+        "setting": "cm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.04607077723927377,
+        "gain_ports_raw": 0.04813415792210095,
+        "response_relative_raw": 0.0635208150400265,
+        "gain_allocation_max": 0.00011688581594517826,
+        "response_relative_allocation_max": 2.4300779173198342e-06,
+        "gain_root_upper": 0.046187663055218944,
+        "gain_ports_upper": 0.04822417416194514,
+        "response_relative_upper": 0.06352123864362519,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 76,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.1690826187827058
+      }
+    },
+    "uniform_cm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6338.477337882767,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 69.72325071671044,
+        "leak_conductance_nS": 6.338477337882767,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          0.97,
+          0.776,
+          0.776
+        ],
+        "section_area_um2": [
+          2437.8758991856794,
+          1950.3007193485437,
+          1950.3007193485437
+        ],
+        "section_volume_um3": [
+          1182.3698111050544,
+          756.716679107235,
+          756.716679107235
+        ],
+        "surface_to_volume_per_um": 2.3512389220473864,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0013998886757510774,
+        "48": 0.0001555899914957832,
+        "144": 1.728834935018309e-05
+      },
+      "comparison": {
+        "geometry": "uniform",
+        "setting": "cm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.046077613903223166,
+        "gain_ports_raw": 0.04813390957546007,
+        "response_relative_raw": 0.0635208150400265,
+        "gain_allocation_max": 0.00013959200308138057,
+        "response_relative_allocation_max": 2.945293017949555e-06,
+        "gain_root_upper": 0.04619856393276307,
+        "gain_ports_upper": 0.04822428389720639,
+        "response_relative_upper": 0.06352123864187531,
+        "root_GAIN": "PASS",
+        "GAIN": "PASS",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 62,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.1690826187827058
+      }
+    },
+    "selective_nominal": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6310.3558227411595,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.1035582274116,
+        "leak_conductance_nS": 6.310355822741159,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.7108108046449492,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          1786.4624015718575,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          634.9183885646202,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.340807331395052,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0014032704908193624,
+        "48": 0.00015596985999603158,
+        "144": 1.7330609601567432e-05
+      },
+      "comparison": {
+        "geometry": "selective",
+        "setting": "nominal",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.028600069638847626,
+        "gain_ports_raw": 0.19631950127724693,
+        "response_relative_raw": 0.3508120119337448,
+        "gain_allocation_max": 0.00014422202659652368,
+        "response_relative_allocation_max": 1.3239189744041834e-05,
+        "gain_root_upper": 0.028616531115764992,
+        "gain_ports_upper": 0.19644305156042238,
+        "response_relative_upper": 0.3508144584833849,
+        "root_GAIN": "PASS",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 84,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.479759704798214
+      }
+    },
+    "selective_ra_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6310.3558227411595,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.1035582274116,
+        "leak_conductance_nS": 6.310355822741159,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.7108108046449492,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          1786.4624015718575,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          634.9183885646202,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.340807331395052,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001278164737618981,
+        "48": 0.00014206136972460124,
+        "144": 1.5785124333726094e-05
+      },
+      "comparison": {
+        "geometry": "selective",
+        "setting": "ra_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.029186436871758273,
+        "gain_ports_raw": 0.1967938483728095,
+        "response_relative_raw": 0.3547869874241481,
+        "gain_allocation_max": 0.00013124636464826014,
+        "response_relative_allocation_max": 1.2018515945818518e-05,
+        "gain_root_upper": 0.029200874190215175,
+        "gain_ports_upper": 0.19691561637546684,
+        "response_relative_upper": 0.35478923447662136,
+        "root_GAIN": "PASS",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 92,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.4458902668086335
+      }
+    },
+    "selective_ra_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6310.3558227411595,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.1035582274116,
+        "leak_conductance_nS": 6.310355822741159,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.7108108046449492,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          1786.4624015718575,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          634.9183885646202,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.340807331395052,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0015264441531663093,
+        "48": 0.0001696640089742537,
+        "144": 1.885228083330658e-05
+      },
+      "comparison": {
+        "geometry": "selective",
+        "setting": "ra_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.028033023573292563,
+        "gain_ports_raw": 0.19587404492517066,
+        "response_relative_raw": 0.346963117683642,
+        "gain_allocation_max": 0.0001569359954447862,
+        "response_relative_allocation_max": 1.4457613309868217e-05,
+        "gain_root_upper": 0.028051568481196172,
+        "gain_ports_upper": 0.19599875397780545,
+        "response_relative_upper": 0.3469657564183098,
+        "root_GAIN": "PASS",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 77,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.5128046666510734
+      }
+    },
+    "selective_gm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6310.3558227411595,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.1035582274116,
+        "leak_conductance_nS": 5.679320240467044,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.7108108046449492,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          1786.4624015718575,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          634.9183885646202,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.340807331395052,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.001400987717704993,
+        "48": 0.0001557119103961754,
+        "144": 1.730189267867992e-05
+      },
+      "comparison": {
+        "geometry": "selective",
+        "setting": "gm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.029186436871757447,
+        "gain_ports_raw": 0.19679316080431875,
+        "response_relative_raw": 0.354786987424151,
+        "gain_allocation_max": 0.0001440151774387823,
+        "response_relative_allocation_max": 1.3243546964822418e-05,
+        "gain_root_upper": 0.029200874168688565,
+        "gain_ports_upper": 0.19691519581074501,
+        "response_relative_upper": 0.3547892344790682,
+        "root_GAIN": "PASS",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 83,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.49543362978737576
+      }
+    },
+    "selective_gm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6310.3558227411595,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 63.1035582274116,
+        "leak_conductance_nS": 6.941391405015276,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.7108108046449492,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          1786.4624015718575,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          634.9183885646202,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.340807331395052,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0014058874392722349,
+        "48": 0.00015626497951008598,
+        "144": 1.7363452731047187e-05
+      },
+      "comparison": {
+        "geometry": "selective",
+        "setting": "gm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.0280330235732928,
+        "gain_ports_raw": 0.19587446598888095,
+        "response_relative_raw": 0.346963117683641,
+        "gain_allocation_max": 0.00014446425993090811,
+        "response_relative_allocation_max": 1.3238863511212451e-05,
+        "gain_root_upper": 0.02805156856155775,
+        "gain_ports_upper": 0.19599957229764642,
+        "response_relative_upper": 0.3469657564210736,
+        "root_GAIN": "PASS",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 85,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.466186060591885
+      }
+    },
+    "selective_cm_minus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6310.3558227411595,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 56.79320240467044,
+        "leak_conductance_nS": 6.310355822741159,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.7108108046449492,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          1786.4624015718575,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          634.9183885646202,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.340807331395052,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0012802780289574605,
+        "48": 0.00014230008457537553,
+        "144": 1.5811698240166195e-05
+      },
+      "comparison": {
+        "geometry": "selective",
+        "setting": "cm_minus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.028600069638847626,
+        "gain_ports_raw": 0.1963196616601265,
+        "response_relative_raw": 0.3508120119337448,
+        "gain_allocation_max": 0.00013143434667937977,
+        "response_relative_allocation_max": 1.2015626110487447e-05,
+        "gain_root_upper": 0.02861653110339935,
+        "gain_ports_upper": 0.1964428129791694,
+        "response_relative_upper": 0.3508144585056918,
+        "root_GAIN": "PASS",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 93,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.479759704798214
+      }
+    },
+    "selective_cm_plus10": {
+      "material": {
+        "length_um": 1200.0,
+        "area_um2": 6310.3558227411595,
+        "volume_um3": 2695.8031693195244,
+        "capacitance_pF": 69.41391405015277,
+        "leak_conductance_nS": 6.310355822741159,
+        "section_lengths_um": [
+          400.0,
+          400.0,
+          400.0
+        ],
+        "section_radii_um": [
+          1.0,
+          0.7108108046449492,
+          0.8
+        ],
+        "section_area_um2": [
+          2513.2741228718346,
+          1786.4624015718575,
+          2010.6192982974676
+        ],
+        "section_volume_um3": [
+          1256.6370614359173,
+          634.9183885646202,
+          804.2477193189872
+        ],
+        "surface_to_volume_per_um": 2.340807331395052,
+        "endcaps_included": false,
+        "annular_ledges_included": false,
+        "scope": "Synthetic prescribed ideal cylinders; no biological material or ATP."
+      },
+      "numerical_checks": {
+        "finite": true,
+        "continuum_reference": true,
+        "reference_edge_currents": true,
+        "production_KCL": true,
+        "reference_KCL": true,
+        "continuity": true,
+        "reciprocity": true,
+        "passivity": true,
+        "conditioning": true,
+        "fine_FVM": true,
+        "FVM_contraction": true,
+        "geometry": true
+      },
+      "fvm_relative_row_errors": {
+        "16": 0.0015236469151318664,
+        "48": 0.00016934844418379477,
+        "144": 1.8817159714147648e-05
+      },
+      "comparison": {
+        "geometry": "selective",
+        "setting": "cm_plus10",
+        "numerical_status": "PASS",
+        "numerical_checks": {
+          "gain_allocation": true,
+          "response_relative_allocation": true
+        },
+        "volume_reduction": 0.05910000000000004,
+        "material_PASS": true,
+        "gain_root_raw": 0.028600069638847626,
+        "gain_ports_raw": 0.19631952859273244,
+        "response_relative_raw": 0.3508120119337448,
+        "gain_allocation_max": 0.00015667250244020596,
+        "response_relative_allocation_max": 1.4460281629355159e-05,
+        "gain_root_upper": 0.02861653112051075,
+        "gain_ports_upper": 0.1964425468100481,
+        "response_relative_upper": 0.35081445849423126,
+        "root_GAIN": "PASS",
+        "GAIN": "FAIL",
+        "RESPONSE_RELATIVE": "FAIL",
+        "gain_max_frequency_index": 76,
+        "response_max_frequency_index": 0,
+        "absolute_voltage_difference_max_mV_at_current_budget": 0.479759704798214
+      }
+    }
+  }
+}

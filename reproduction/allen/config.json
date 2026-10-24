@@ -1,0 +1,55 @@
+{
+  "frequencies_Hz": [
+    0,
+    1,
+    2,
+    5,
+    10,
+    20,
+    50,
+    100
+  ],
+  "meshes": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "candidates": [
+    "baseline",
+    "unchanged",
+    "uniform",
+    "selective"
+  ],
+  "Ra_ohm_cm": 100.0,
+  "gm_S_cm2": 0.0001,
+  "cm_uF_cm2": 1.0,
+  "EL_mV": -65.0,
+  "uniform_radius_factor": 0.97,
+  "volume_reduction_fraction": 0.0591,
+  "spatial_max": 0.0025,
+  "contraction_max": 0.65,
+  "contraction_floor": 1e-08,
+  "algebraic_relative_max": 1e-09,
+  "geometry_relative_max": 1e-10,
+  "electrical_margin": 0.05,
+  "transient": {
+    "dt_ms": [
+      0.1,
+      0.05,
+      0.025
+    ],
+    "horizon_ms": 250.0,
+    "on_ms": 50.0,
+    "off_ms": 150.0,
+    "amplitude_nA": 0.01,
+    "input_ports": [
+      0,
+      3
+    ],
+    "max_final_voltage_difference_mV": 0.0025,
+    "contraction_max": 0.65
+  },
+  "reference_max_relative_matrix_error": 1e-08,
+  "reference_trace_max_absolute_mV": 1e-07
+}

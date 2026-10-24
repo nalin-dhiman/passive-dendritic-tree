@@ -1,0 +1,23 @@
+{
+  "provider": "Allen Institute for Brain Science",
+  "dataset": "Allen Cell Types Database",
+  "specimen_id": 588402092,
+  "reconstruction_id": 675965554,
+  "source_file_id": 675965556,
+  "source_swc_url": "https://api.brain-map.org/api/v2/well_known_file_download/675965556",
+  "specimen_url": "https://celltypes.brain-map.org/experiment/morphology/588402092",
+  "terms_url": "https://alleninstitute.org/legal/terms-of-use",
+  "citation_policy_url": "https://alleninstitute.org/legal/citation-policy",
+  "source_sha256": "8d3c5fc12fbee445d8cdbe3a2281029e4f87b219689856477e82e60f46d29bb9",
+  "included_swc_types": [
+    1,
+    3,
+    4
+  ],
+  "excluded_swc_types": [
+    2
+  ],
+  "source_use": "Attributed noncommercial educational/research use; Allen rights retained.",
+  "coordinates_and_radii": "micrometres",
+  "engine_sha256": "4d54f9df9abd13bbe963ddbcc6628664dd06e3ae612e8532cf62a29dbd93569c"
+}

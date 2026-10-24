@@ -7,6 +7,12 @@ and across the arbor.
 
 **[Open the live explorer](https://nalin-dhiman.github.io/passive-dendritic-tree/)**
 
+The complete deterministic experiment package is also included: both continuum
+Y-cable formulations, all 35 Y conditions, the 128 reconstructed harmonic
+conditions, all 18 reconstructed current-step runs, independent arithmetic
+checks, source geometry, reference arrays and figure generation. See
+**[REPRODUCING.md](REPRODUCING.md)** for a tested, single-command workflow.
+
 The main explorer calculates periodic steady-state responses locally in a Web
 Worker. Its arbor colors come from the complex voltage solution at the displayed
 nodes. Animation shows phase within an established periodic response. It does not
@@ -131,6 +137,16 @@ npm test
 python3 -m pip install -r requirements.txt
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
+
+For the complete experiment, install `requirements-reproduce.lock` in a dedicated
+environment and run:
+
+```sh
+python reproduce.py --output outputs/full
+```
+
+Successful reproduction retains the failed distal step-accuracy verdict. The
+output summaries distinguish reference agreement from scientific acceptance.
 
 `python/passive_tree.py` supplies frustum geometry, axial resistance, sparse
 frequency-domain impedance, an independent tree solve and Crank–Nicolson

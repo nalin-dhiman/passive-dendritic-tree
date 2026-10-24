@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "model": "Three sealed passive cylinders of length400um with one ideal junction; no soma or end-cap membrane.",
+  "scope": {
+    "ports": [
+      "parent_start",
+      "junction",
+      "daughter1_tip",
+      "daughter2_tip",
+      "parent_mid",
+      "daughter1_mid",
+      "daughter2_mid"
+    ],
+    "frequency_Hz": {
+      "start": 0,
+      "end": 100,
+      "step": 1,
+      "count": 101
+    },
+    "settings": [
+      {
+        "id": "nominal",
+        "ra": 100,
+        "gm": 0.0001,
+        "cm": 1
+      },
+      {
+        "id": "ra_minus10",
+        "ra": 90,
+        "gm": 0.0001,
+        "cm": 1
+      },
+      {
+        "id": "ra_plus10",
+        "ra": 110,
+        "gm": 0.0001,
+        "cm": 1
+      },
+      {
+        "id": "gm_minus10",
+        "ra": 100,
+        "gm": 9e-05,
+        "cm": 1
+      },
+      {
+        "id": "gm_plus10",
+        "ra": 100,
+        "gm": 0.00011,
+        "cm": 1
+      },
+      {
+        "id": "cm_minus10",
+        "ra": 100,
+        "gm": 0.0001,
+        "cm": 0.9
+      },
+      {
+        "id": "cm_plus10",
+        "ra": 100,
+        "gm": 0.0001,
+        "cm": 1.1
+      }
+    ]
+  },
+  "geometries": [
+    {
+      "id": "baseline",
+      "radii": [
+        1,
+        0.8,
+        0.8
+      ],
+      "role": "reference"
+    },
+    {
+      "id": "unchanged",
+      "radii": [
+        1,
+        0.8,
+        0.8
+      ],
+      "role": "identity_control"
+    },
+    {
+      "id": "disruptive",
+      "radii": [
+        0.7,
+        0.56,
+        0.56
+      ],
+      "role": "disruption_control"
+    },
+    {
+      "id": "uniform",
+      "radii": [
+        0.97,
+        0.776,
+        0.776
+      ],
+      "role": "material_candidate"
+    },
+    {
+      "id": "selective",
+      "radii": [
+        1,
+        0.7108108046449492,
+        0.8
+      ],
+      "role": "equal_volume_material_candidate"
+    }
+  ],
+  "criteria": {
+    "gain_margin": 0.05,
+    "response_relative_margin": 0.05,
+    "volume_reduction_min": 0.05,
+    "geometry_relative_error_max": 1e-12,
+    "continuum_reference_relative_max": 1e-10,
+    "current_balance_max": 1e-10,
+    "continuity_relative_max": 1e-10,
+    "reciprocity_relative_max": 1e-10,
+    "passivity_min_relative_eigenvalue": -1e-10,
+    "condition_number_max": 100000000,
+    "fvm_meshes": [
+      16,
+      48,
+      144
+    ],
+    "fvm_fine_relative_row_error_max": 0.0005,
+    "fvm_max_error_ratio_max": 0.35,
+    "allocation_fraction_of_margin_max": 0.1,
+    "identity_exact_required": true,
+    "disruptive_gain_fail_required": true
+  },
+  "witness": {
+    "current_L2_nA": 0.01,
+    "period_samples": 401,
+    "cycles": 2
+  },
+  "definitions": {
+    "row_scale": "b_j=max(norm2(Z0[j,:]),1MOhm)",
+    "gain_root": "max_frequency norm2((Zc-Z0)[root,:])/b_root plus shared gain allowance",
+    "gain_ports": "max_frequency,max_row norm2((Zc-Z0)[row,:])/b_row plus shared gain allowance",
+    "response_relative": "max_frequency spectral_norm((Zc-Z0) inverse(Z0)) plus response allowance",
+    "gain_allowance": "4 max_row ((row_norm(Z0-Z0_FVM144)+row_norm(Zc-Zc_FVM144))/b_j)",
+    "response_allowance": "4 spectral_norm(R-R_FVM144)",
+    "scope": "Sevencollocatedports, sampled0..100Hz, engineeringparametercontrasts and empirical discrepancy allowances."
+  }
+}

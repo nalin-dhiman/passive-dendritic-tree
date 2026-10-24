@@ -9,7 +9,7 @@ reuse permissions. NumPy and SciPy retain their respective licenses.
 
 ## Allen-derived morphology
 
-The reconstructed cortical example is derived from the **Allen Cell Types
+The original SWC and reconstructed cortical example come from the **Allen Cell Types
 Database**, specimen **588402092**, Allen Institute for Brain Science:
 
 - [Specimen and morphology](https://celltypes.brain-map.org/experiment/morphology/588402092)
@@ -20,6 +20,9 @@ Database**, specimen **588402092**, Allen Institute for Brain Science:
 - Coordinates and radii are in micrometres. Soma and dendritic types 1, 3 and 4
   are retained; the axon is excluded. The derived file preserves the retained
   centerlines, radii, topology and source identifiers.
+- The unchanged SWC input is included under `reproduction/allen/data/`.
+  Its original header and source tracing metadata are retained. Numerical
+  reference arrays retain the same source-use conditions.
 
 Allen-derived geometry and numerical examples are supplied for attributed,
 noncommercial educational and research use under the

@@ -1,0 +1,21 @@
+{
+  "source_modules": {
+    "engine.py": {
+      "source_sha256": "21d3998971b99ec92d4facf5a57343ca460c43a90c7c8259b9b27e9ae8bbd560",
+      "adaptation": "Numerical implementation retained without alteration."
+    },
+    "independent_reference.py": {
+      "source_sha256": "9fa49e4b479217ca7db7fc60975ed31fd72a3312c14657be36d8e160a524e8f2",
+      "adaptation": "Numerical implementation retained without alteration."
+    },
+    "metrics.py": {
+      "source_sha256": "914030ef02c9387c1904351a6afc32a21eaf7c0689c16a2758a717954296a420",
+      "adaptation": "Numerical implementation retained without alteration."
+    }
+  },
+  "reference_data_sha256": {
+    "y_impedance_reference.npz": "c3dad5052ca10730b3d955765431b1c6f96e584d83cf21ecad70ff8c0f75aba6",
+    "y_expected.json": "f4c64888f0c67675604191a256c88536e5644bb65a6603ae5fe4805822dc94ad"
+  },
+  "equations": "Unchanged continuum admittance, independent edge-state propagation, vertex finite volumes and comparison formulas."
+}
