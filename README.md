@@ -1,105 +1,139 @@
 # Passive Cable Lab
 
-A buildless, browser-local demonstration of voltage spread through a passive cable tree. Change cable radii, apply an electrode-current pulse, compare root and distal traces, and export the numerical samples. A local SWC upload lets you explore your own geometry without sending that file to a server.
+An interactive electrical workbench for a reconstructed mouse cortical dendritic
+tree and an ideal Y-shaped cable. Apply a sinusoidal current, change where a fixed
+amount of modeled dendritic material is removed, and compare voltage at the soma
+and across the arbor.
 
-**This model has no active channels, synapses, spikes, optimization, or metabolic accounting.** A small difference at one displayed location is not evidence that every possible electrical response is preserved.
+**[Open the live explorer](https://nalin-dhiman.github.io/passive-dendritic-tree/)**
 
-Live demonstration: <https://nalin-dhiman.github.io/passive-dendritic-tree/>
+The main explorer calculates periodic steady-state responses locally in a Web
+Worker. Its arbor colors come from the complex voltage solution at the displayed
+nodes. Animation shows phase within an established periodic response. It does not
+show a stimulus switching on or an action potential propagating.
 
-## Open the demonstration
+## Explore
 
-The static site is in `docs/`. For a local preview:
+- Switch between the reconstructed cortical arbor and the ideal Y cable.
+- Compare the original geometry, uniform thinning and selective subtree thinning.
+- Change current input, frequency, amplitude and phase; observe multiple fixed ports.
+- Inspect original, modified and difference voltage maps using shared scales.
+- Change projection, pan and zoom without altering the electrical model.
+- Compare material measures, frequency-dependent transfer and three explicitly
+  defined electrical discrepancies.
+- Export settings and numerical voltage samples.
+
+The [pulse and local-SWC workbench](https://nalin-dhiman.github.io/passive-dendritic-tree/legacy.html)
+remains available separately. Its backward-Euler transients and arbitrary uploads
+have a different numerical scope from the harmonic explorer.
+
+## Run locally
+
+No build, installation or external JavaScript library is required:
 
 ```sh
 python3 -m http.server 8080 --directory docs
 ```
 
-Visit <http://localhost:8080>. JavaScript modules and a local Web Worker require HTTP(S); opening `index.html` as a `file:` URL is unsupported. There are no third-party browser scripts, CDN dependencies, tracking services, or remote simulation calls.
+Visit `http://localhost:8080`. JavaScript modules and workers require HTTP(S);
+opening the HTML as a `file:` URL is unsupported. GitHub Pages serves `docs/`
+from `main`.
 
-For GitHub Pages, publish the `docs/` directory from the default branch, or use a static Pages workflow that uploads that directory.
+## Anatomical example
+
+The cortical morphology is **Allen Cell Types Database specimen 588402092**, a
+mouse visual-cortical layer-5 spiny neuron. The example retains 2,534 soma and
+dendritic source points and 2,533 source edges. Axonal points are excluded.
+
+Seven fixed source locations are used for inputs and recordings: source IDs
+`1, 1621, 1783, 2165, 1216, 182, 708`. Refinement inserts cable nodes without
+moving those physical locations. Selective thinning affects the basal subtree
+rooted at source ID `724`; it does not reselect a branch from voltage outcomes.
+
+Uniform thinning multiplies dendritic radii by `0.97`. The selective factor is
+`0.8648954759986717` on that subtree. Both remove 5.91% of modeled dendritic
+volume while holding the soma fixed. Soma-plus-dendrite volume therefore changes
+by a smaller fraction. Material displays distinguish these denominators.
+
+Source: [Allen morphology](https://celltypes.brain-map.org/experiment/morphology/588402092),
+[exact SWC](https://api.brain-map.org/api/v2/well_known_file_download/675965556).
+Allen-derived data are supplied under its terms for attributed noncommercial
+use; see [NOTICES.md](NOTICES.md).
 
 ## Electrical model
 
-All lengths and radii are in µm. Cable edges have linearly varying radii. Each graph node owns half the lateral membrane of every incident edge. A shared node enforces branch-voltage continuity, while pairwise axial currents conserve current. Terminal ends are sealed; end-cap membrane is omitted. The model is a finite-volume approximation of a passive cable tree.
+Coordinates and radii are in micrometres. Internal edges are linear-radius
+frusta. A single equipotential spherical soma contributes fixed membrane area;
+its stem attachments use the child's dendritic radius. Terminal cable ends are
+sealed; spines, junction ledges and end-cap membrane are omitted.
 
-For an edge of length `L` with endpoint radii `r0` and `r1`:
-
-```text
-volume = π L (r0² + r0 r1 + r1²) / 3                     [µm³]
-lateral area = π (r0 + r1) √(L² + (r1 − r0)²)           [µm²]
-axial resistance = 0.01 Ra L / (π r0 r1)                 [MΩ]
-axial conductance = 100 π r0 r1 / (Ra L)                 [µS]
-```
-
-For a control-volume membrane area `A`:
+For length `L` and endpoint radii `r0, r1`:
 
 ```text
-C = cm A × 10⁻⁵                                        [nF]
-g_leak = gm A × 0.01                                   [µS]
-C dV/dt = I − g_leak (V − E_L) − Σ g_axial (V − V_neighbor)
+volume = pi L (r0^2 + r0 r1 + r1^2) / 3            [um^3]
+lateral area = pi (r0 + r1) sqrt(L^2 + (r1-r0)^2)  [um^2]
+axial resistance = 0.01 Ra L / (pi r0 r1)          [MOhm]
 ```
 
-`Ra` is in Ω cm, `cm` in µF/cm², and `gm` in S/cm². Currents are in nA, voltages in mV and time in ms. The defaults are `Ra=150`, `cm=1`, `gm=0.0001`, and `E_L=−65 mV`. At rest every node starts at the leak reversal. The current pulse starts at 20 ms. The browser integrates both original and modified geometries with identical inputs.
+Exact half-frustum membrane areas are assigned to adjacent node control volumes.
+With nodal leak matrix `G`, capacitance `C` and axial coupling included in `G`,
+the harmonic equation is
 
-Backward Euler with a 0.05 ms timestep is solved by linear-time Hines elimination. Pulse current is evaluated at each integration interval's midpoint. The animation displays actual numerical solutions sampled every 0.2 ms, rather than a prerecorded sequence. The plots, animation and CSV share those same samples. Spatial and temporal discretization errors remain; the default settings are not a certified accuracy guarantee for arbitrary uploaded trees.
+```text
+(G + i 2 pi f C / 1000) Vhat = Ihat
+V(t) = E_L + Re[Vhat exp(i 2 pi f t / 1000)]
+```
 
-The synthetic Y has a 300 µm parent cable of radius 2 µm and two 400 µm daughter cables of radius 1.5 µm. Mesh edges are at most 10 µm long. `All cables` scales every cable radius; `Selected branch` additionally scales daughter B. Centerlines, topology, current location and passive densities stay fixed. The material panel reports cable volume and lateral area, not an energetic cost.
+Here time is in ms, frequency in Hz, voltage in mV, current in nA, conductance
+in uS and capacitance in nF. The UI accepts pA and converts to nA. Nominal
+parameters are `Ra=100 Ohm cm`, `gm=0.0001 S/cm^2`, `cm=1 uF/cm^2` and
+`E_L=-65 mV`. A complex tree-elimination solver computes both original and
+modified responses with identical input and physical recording locations.
 
-## Local SWC input
+## Reading the comparisons
 
-SWC files must contain exactly seven whitespace-separated columns: node ID, type, x, y, z, radius, parent ID. Use µm for coordinates and **radius**, not diameter. One parent-`−1` root is required; IDs must be unique and radii strictly positive. Unsupported or malformed graphs fail explicitly rather than being repaired or truncated.
+Let `Z0` and `Zc` be the original and modified seven-port impedance matrices,
+and `D=Zc-Z0`. The main explorer uses these three distinct measures:
 
-The interactive limits are 2 MB and 2,500 original points. Edges longer than 15 µm are subdivided, preserving their linear-radius geometry; a 6,000-node limit prevents excessive browser resource use. Every original cable edge and type is included. This is an electrical idealization, not an anatomical completeness or radius-calibration audit.
+```text
+somatic gain discrepancy = ||D[soma,:]||_2 / ||Z0||_2
+distributed gain discrepancy = ||D||_2 / ||Z0||_2
+complete-response-relative discrepancy = ||D inverse(Z0)||_2
+```
 
-A single type-1 root soma is represented by a sphere with area `4πr²`. Its outgoing cables use their child radius at the attachment, avoiding an artificial cone from the soma radius. Multi-point somata are rejected because their membrane representation requires a separate explicit policy. Soma area stays fixed under the cable-radius sliders and is excluded from the displayed cable-area comparison. Soma volume is not included in the cable-volume display.
+The matrix norm is the spectral norm. The last measure normalizes each response
+difference against the original response to the same current. These matrix
+comparisons allow signed and phase-controlled currents across the seven ports;
+they differ from the displayed single-input voltage trace. The 5% guide is an
+engineering comparison margin. Sampled frequencies and seven ports do not cover
+every possible input, location or continuous frequency.
 
-For an uploaded tree, distal B is the longest root-to-terminal path endpoint and distal A is the next-longest terminal endpoint (or the root if only one exists). `Selected branch` affects only the terminal path from distal B back to its nearest upstream fork. The diagram uses the two coordinate axes with the largest spatial extents; widths are exaggerated. The current input and recordings remain at the same graph identities when radii change.
+## Numerical scope
 
-## Run the numerical fixtures
+The harmonic implementation is checked against saved independent sparse-matrix
+solutions, analytical fixtures, current balance and refinement. Test descriptions
+identify the conditions covered. Intermediate frequencies are live calculations,
+not an assertion that every frequency has independently certified accuracy.
 
-Node.js 18 or later is sufficient; no installation is required:
+An earlier reconstructed distal rectangular-current comparison exceeded its
+declared 0.0025 mV temporal accuracy requirement. That failure remains unchanged;
+harmonic verification does not certify that transient family. The separate legacy
+pulse workbench is an educational finite-step calculation.
+
+All examples are passive electrical models. They contain no active channels,
+conductance-based synapses, ATP accounting or morphology optimization. Displayed
+material describes modeled geometry, with reconstruction and radius uncertainty.
+
+## Tests and reusable Python code
 
 ```sh
 npm test
-```
-
-Fixtures cover analytic geometry, radius scaling, exact frustum axial resistance, membrane units, an independently soluble RC circuit, temporal error contraction, an independent dense linear solve, per-node and whole-tree current conservation, sealed-cylinder spatial convergence, Y symmetry, pulse timing, rest preservation, final recording samples, and strict SWC validation. They establish those scoped properties; they do not certify arbitrary biological reconstructions or active-neuron models.
-
-## Files
-
-- `docs/js/engine.mjs`: pure geometry, SWC validation and passive finite-volume solver.
-- `docs/js/simulation-worker.mjs`: numerical integration outside the UI thread.
-- `docs/js/app.mjs`: controls, canvas drawing and numerical CSV export.
-- `tests/engine.test.mjs`: executable numerical fixtures.
-
-No reconstructed neuron data are bundled. For uploaded data, the user remains responsible for provenance, units, anatomical interpretation and applicable data-use terms.
-
-## Optional Python calculations
-
-`python/passive_tree.py` provides frustum geometry, exact axial resistance, a passive finite-volume matrix, sparse frequency-domain impedance, an independent Hines solve, and Crank–Nicolson transients. Install NumPy and SciPy in your own environment:
-
-```sh
 python3 -m pip install -r requirements.txt
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-Example (a user-supplied, topologically ordered SWC file):
-
-```python
-import sys
-sys.path.insert(0, 'python')
-from passive_tree import read_swc, build_tree
-
-swc, parent = read_swc('your_morphology.swc')
-tree = build_tree(swc, parent, subdivisions=2, Ra=150, gm=1e-4, cm=1)
-root = tree.original_to_mesh[0]
-distal = tree.original_to_mesh[-1]  # example source point; choose your sites explicitly
-Z, full_response, currents = tree.impedance([root, distal], frequency_Hz=10)
-print(Z)  # mV / nA = MΩ
-```
-
-The Python reader explicitly retains only soma and dendritic types 1, 3 and 4; it requires one root soma marker, parents before children, positive radii and nonzero edges. Disconnection after filtering is rejected. Unlike the browser upload (which includes all cable types), this is a soma/dendrite-only API. A scalar Python `radius_scale` changes **all** radii, including the soma; pass an explicit per-source-node vector with root factor 1 to hold the soma fixed. This policy must be chosen explicitly for comparisons.
-
-Python transients return voltage **relative to rest** in mV, whereas the browser plots absolute voltage with a −65 mV leak reversal. Python uses Crank–Nicolson and the browser uses backward Euler; they are separate numerical implementations with distinct timestep policies. The synthetic tests cover analytic geometry, independently integrated axial resistance, a sealed-cylinder continuum DC solution with soma load, reciprocity, passivity, geometry preservation, solver agreement, pulse charge and invalid-parameter rejection. None of these checks establishes universal numerical accuracy, anatomical completeness, radius calibration, active physiology, or biological functional equivalence.
-
-See `NOTICES.md` for code and data-use notices.
+`python/passive_tree.py` supplies frustum geometry, axial resistance, sparse
+frequency-domain impedance, an independent tree solve and Crank–Nicolson
+transients. Its reader retains soma and dendritic types 1, 3 and 4. Python
+transient voltages are relative to rest; the legacy browser plots absolute
+voltage. These remain separate numerical implementations with explicit policies.

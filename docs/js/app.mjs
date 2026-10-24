@@ -1,201 +1,53 @@
-import {makeY, parseSwc, refineGeometry} from './engine.mjs';
+import {FREQUENCIES} from './harmonic.mjs';
 
 const $ = id => document.getElementById(id);
-const colors = {root: '#c66f4e', a: '#147f6d', b: '#8463b9', ink: '#143039', muted: '#71858a'};
-const state = {geometry: makeY(), results: null, view: 'modified', time: 0, playing: false, request: 0, rendered: 0, lastClock: null, filename: ''};
-const controls = ['amplitude', 'duration', 'uniform', 'branch', 'input-site'];
-const worker = new Worker(new URL('./simulation-worker.mjs', import.meta.url), {type: 'module'});
-let debounce, pendingAutoplay = true;
-
-function context(canvas) {
-  const {width, height} = canvas.getBoundingClientRect(), ratio = Math.min(window.devicePixelRatio || 1, 2);
-  if (canvas.width !== Math.round(width * ratio) || canvas.height !== Math.round(height * ratio)) {
-    canvas.width = Math.round(width * ratio); canvas.height = Math.round(height * ratio);
-  }
-  const ctx = canvas.getContext('2d'); ctx.setTransform(ratio, 0, 0, ratio, 0, 0); ctx.clearRect(0, 0, width, height);
-  return {ctx, width, height};
-}
-function number(value) { return new Intl.NumberFormat('en', {maximumFractionDigits: 0}).format(value); }
-function setPlaying(value) {
-  state.playing = value; state.lastClock = null;
-  $('play').innerHTML = `<span aria-hidden="true">${value ? 'Ⅱ' : '▶'}</span> ${value ? 'Pause' : 'Play'}`;
-  $('play').setAttribute('aria-label', value ? 'Pause voltage animation' : 'Play voltage animation');
-}
-function updateOutputs() {
-  $('amplitude-value').textContent = `${Number($('amplitude').value).toFixed(2)} nA`;
-  $('duration-value').textContent = `${$('duration').value} ms`;
-  $('uniform-value').textContent = `${Math.round(100 * Number($('uniform').value))}%`;
-  $('branch-value').textContent = `${Math.round(100 * Number($('branch').value))}%`;
-}
-function requestSimulation() {
-  clearTimeout(debounce); updateOutputs();
-  $('simulation-status').textContent = 'Solving baseline and modified cable locally…';
-  $('download').disabled = true;
-  debounce = setTimeout(() => {
-    setPlaying(false); state.time = 0;
-    worker.postMessage({id: ++state.request, geometry: state.geometry,
-      scales: {uniform: Number($('uniform').value), branch: Number($('branch').value)},
-      config: {site: $('input-site').value, amplitude: Number($('amplitude').value), duration: Number($('duration').value)}});
-  }, 100);
-}
-worker.onmessage = ({data}) => {
-  if (data.id !== state.request) return;
-  if (data.error) { $('simulation-status').textContent = data.error; $('simulation-status').classList.add('error'); return; }
-  state.results = data; state.rendered = data.id; state.time = 0;
-  $('simulation-status').classList.remove('error');
-  $('simulation-status').textContent = 'Computed in your browser · 0.05 ms timestep · 0.2 ms displayed samples';
-  $('mesh-count').textContent = `${number(data.modified.n)} compartments`;
-  $('volume').textContent = `${number(data.modified.cableVolume)} µm³`;
-  $('area').textContent = `${number(data.modified.totalArea - data.modified.somaArea)} µm²`;
-  const dv = 100 * (data.modified.cableVolume / data.baseline.cableVolume - 1), da = 100 * ((data.modified.totalArea - data.modified.somaArea) / (data.baseline.totalArea - data.baseline.somaArea) - 1);
-  $('material-change').textContent = Math.abs(dv) < 0.0001 ? 'Baseline and modified cable material are identical.' : `${dv > 0 ? '+' : '−'}${Math.abs(dv).toFixed(2)}% cable volume · ${da > 0 ? '+' : '−'}${Math.abs(da).toFixed(2)}% cable area, relative to baseline.`;
-  $('download').disabled = false; $('scrubber').value = 0;
-  draw();
-  if (pendingAutoplay && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) { pendingAutoplay = false; setPlaying(true); }
-};
-worker.onerror = () => {
-  $('simulation-status').textContent = 'The simulation worker could not start. Serve these files over HTTP(S), rather than opening index.html directly.';
-  $('simulation-status').classList.add('error');
-};
-
-function voltageColor(v, min, max) {
-  const stops = [[56, 93, 138], [67, 165, 150], [224, 202, 125], [231, 129, 85]];
-  const t = Math.max(0, Math.min(1, (v - min) / Math.max(1, max - min))) * 3, i = Math.min(2, Math.floor(t)), u = t - i;
-  return `rgb(${stops[i].map((c, k) => Math.round(c * (1 - u) + stops[i + 1][k] * u)).join(',')})`;
-}
-function currentFrame(trace) { return Math.min(trace.count - 1, Math.round(state.time / trace.config.sampleEvery)); }
-function voltageRange() {
-  if (!state.results) return {min: -65, max: -45};
-  const extrema = [];
-  for (const key of ['baseTrace', 'modifiedTrace']) for (const port of ['root', 'a', 'b']) {
-    const values = state.results[key][port];
-    extrema.push(values.reduce((a, b) => Math.min(a, b), -65), values.reduce((a, b) => Math.max(a, b), -65));
-  }
-  const low = Math.min(...extrema), high = Math.max(...extrema);
-  return {min: Math.floor(Math.min(-65, low) / 5) * 5, max: Math.ceil(Math.max(-60, high) / 5) * 5};
-}
-function project(width, height) {
-  const nodes = state.geometry.nodes, dimensions = ['x', 'y', 'z'].map(key => ({key, min: Math.min(...nodes.map(n => n[key])), max: Math.max(...nodes.map(n => n[key]))}));
-  const order = state.geometry.source === 'synthetic' ? [dimensions[0], dimensions[1]] : [...dimensions].sort((a, b) => (b.max - b.min) - (a.max - a.min)).slice(0, 2);
-  const [x, y] = order, padX = width < 400 ? 56 : 90, padY = 44;
-  const scale = Math.min((width - padX * 2) / Math.max(1, x.max - x.min), (height - padY * 2) / Math.max(1, y.max - y.min));
-  return {points: nodes.map(n => ({x: width / 2 + (n[x.key] - (x.min + x.max) / 2) * scale, y: height / 2 - (n[y.key] - (y.min + y.max) / 2) * scale})), axes: `${x.key}${y.key}`, scale};
-}
-function drawTree() {
-  const {ctx, width, height} = context($('tree'));
-  if (!state.results || width < 10) return;
-  const trace = state.view === 'modified' ? state.results.modifiedTrace : state.results.baseTrace, model = state.results[state.view];
-  const frame = currentFrame(trace), {points, axes, scale} = project(width, height), range = voltageRange();
-  for (const edge of model.geometry) {
-    const a = points[edge.parent], b = points[edge.child], v = (trace.frames[frame * trace.n + edge.parent] + trace.frames[frame * trace.n + edge.child]) / 2;
-    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.lineCap = 'round';
-    ctx.strokeStyle = voltageColor(v, range.min, range.max); ctx.lineWidth = Math.max(1.1, Math.min(13, (edge.r0 + edge.r1) * scale * 1.8)); ctx.stroke();
-  }
-  const named = [['root', 'Root'], ['a', 'A'], ['b', 'B']];
-  for (const [key, label] of named) {
-    const p = points[state.geometry.ports[key]], radius = key === 'root' ? 5.5 : 4;
-    ctx.beginPath(); ctx.arc(p.x, p.y, radius + 3, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
-    ctx.beginPath(); ctx.arc(p.x, p.y, radius, 0, Math.PI * 2); ctx.fillStyle = colors[key]; ctx.fill();
-    let labelX = p.x + (p.x < width / 2 ? -12 : 12), align = p.x < width / 2 ? 'right' : 'left';
-    if (key === 'root' && state.geometry.source === 'synthetic') {labelX = p.x + 13; align = 'left';}
-    ctx.font = '600 11px system-ui, sans-serif'; ctx.fillStyle = colors[key]; ctx.textAlign = align; ctx.fillText(label, labelX, p.y + 4);
-  }
-  const port = $('input-site').value, q = points[state.geometry.ports[port]], active = state.time >= 20 && state.time < 20 + Number($('duration').value);
-  if (active) {ctx.beginPath(); ctx.arc(q.x, q.y, 15, 0, Math.PI * 2); ctx.strokeStyle = '#cfad53'; ctx.lineWidth = 1.5; ctx.stroke();}
-  const arrowDirection = q.x > width / 2 + 10 ? -1 : 1;
-  ctx.strokeStyle = active ? '#b18a27' : '#768b8c'; ctx.lineWidth = 1.2;
-  ctx.beginPath(); ctx.moveTo(q.x + arrowDirection * 35, q.y + 18); ctx.lineTo(q.x + arrowDirection * 10, q.y + 4);
-  ctx.lineTo(q.x + arrowDirection * 15, q.y + 12); ctx.moveTo(q.x + arrowDirection * 10, q.y + 4); ctx.lineTo(q.x + arrowDirection * 20, q.y + 4); ctx.stroke();
-  ctx.textAlign = 'left'; ctx.font = '9px system-ui, sans-serif'; ctx.fillStyle = '#81938f';
-  ctx.fillText(`${axes.toUpperCase()} projection · widths exaggerated`, 10, height - 9);
-  // A physical centerline scale; radius display is explicitly exaggerated.
-  const barLength = 100 * scale;
-  if (barLength > 12 && barLength < width / 3) {
-    const x = width - barLength - 12, y = height - 20;
-    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + barLength, y); ctx.strokeStyle = '#7e938d'; ctx.lineWidth = 1; ctx.stroke();
-    ctx.textAlign = 'center'; ctx.fillText('100 µm', x + barLength / 2, y - 5);
-  }
-  $('scale-min').textContent = `${range.min} mV`; $('scale-max').textContent = `${range.max} mV`;
-}
-function drawTraces() {
-  const {ctx, width, height} = context($('traces'));
-  if (!state.results || width < 10) return;
-  const left = 48, right = 14, top = 20, bottom = 35, w = width - left - right, h = height - top - bottom;
-  const traces = [state.results.baseTrace, state.results.modifiedTrace], all = traces.flatMap(t => [t.root, t.b]);
-  const low = Math.min(-65, ...all.map(v => v.reduce((a, b) => Math.min(a, b), -65))), high = Math.max(-65, ...all.map(v => v.reduce((a, b) => Math.max(a, b), -65)));
-  const margin = Math.max(0.5, (high - low) * 0.12), min = low - margin, max = high + margin;
-  const x = t => left + t / 160 * w, y = v => top + (max - v) / (max - min) * h;
-  ctx.fillStyle = '#f6ecd75c'; ctx.fillRect(x(20), top, x(20 + Number($('duration').value)) - x(20), h);
-  ctx.font = '9px system-ui, sans-serif'; ctx.fillStyle = colors.muted; ctx.textAlign = 'right';
-  for (let k = 0; k <= 4; k++) {
-    const v = min + (max - min) * k / 4, py = y(v);
-    ctx.beginPath(); ctx.moveTo(left, py); ctx.lineTo(width - right, py); ctx.strokeStyle = '#eaf0ec'; ctx.lineWidth = 1; ctx.stroke();
-    ctx.fillText(v.toFixed(1), left - 9, py + 3);
-  }
-  ctx.textAlign = 'center';
-  for (let t = 0; t <= 160; t += 40) ctx.fillText(String(t), x(t), height - 17);
-  ctx.save(); ctx.translate(12, top + h / 2); ctx.rotate(-Math.PI / 2); ctx.fillText('Voltage (mV)', 0, 0); ctx.restore();
-  ctx.fillText('Time (ms)', left + w / 2, height - 2);
-  for (const [i, trace] of traces.entries()) for (const port of ['root', 'b']) {
-    ctx.beginPath(); trace.time.forEach((t, j) => {if (j === 0) ctx.moveTo(x(t), y(trace[port][j])); else ctx.lineTo(x(t), y(trace[port][j]));});
-    ctx.strokeStyle = colors[port]; ctx.lineWidth = i === 0 ? 1.4 : 2; ctx.globalAlpha = i === 0 ? 0.55 : 1; ctx.setLineDash(i === 0 ? [5, 4] : []); ctx.stroke();
-  }
-  ctx.setLineDash([]); ctx.globalAlpha = 1;
-  ctx.beginPath(); ctx.moveTo(x(state.time), top); ctx.lineTo(x(state.time), top + h); ctx.strokeStyle = '#9bb6ab'; ctx.lineWidth = 1; ctx.stroke();
-}
-function draw() {
-  $('time-label').textContent = state.time.toFixed(1); $('scrubber').value = state.time;
-  drawTree(); drawTraces();
-}
-function animate(clock) {
-  if (state.playing && state.results) {
-    if (state.lastClock !== null) state.time = Math.min(160, state.time + Math.min(100, clock - state.lastClock) / 1000 * Number($('speed').value));
-    state.lastClock = clock; draw();
-    if (state.time >= 160) setPlaying(false);
-  }
-  requestAnimationFrame(animate);
-}
-for (const id of controls) $(id).addEventListener(id === 'input-site' ? 'change' : 'input', requestSimulation);
-$('play').addEventListener('click', () => {if (state.time >= 160) state.time = 0; setPlaying(!state.playing); draw();});
-$('restart').addEventListener('click', () => {state.time = 0; draw();});
-$('scrubber').addEventListener('input', () => {setPlaying(false); state.time = Number($('scrubber').value); draw();});
-for (const view of ['baseline', 'modified']) $('view-' + view).addEventListener('click', () => {
-  state.view = view;
-  for (const key of ['baseline', 'modified']) {$('view-' + key).classList.toggle('selected', key === view); $('view-' + key).setAttribute('aria-pressed', String(key === view));}
-  draw();
-});
-$('reset').addEventListener('click', () => {
-  $('amplitude').value = 0.15; $('duration').value = 20; $('uniform').value = 1; $('branch').value = 1; $('input-site').value = 'b'; requestSimulation();
-});
-$('swc-file').addEventListener('change', async event => {
-  const file = event.target.files[0]; if (!file) return;
-  try {
-    if (file.size > 2_000_000) throw new Error('Choose a file smaller than 2 MB.');
-    const parsed = parseSwc(await file.text());
-    const geometry = refineGeometry(parsed, 15);
-    state.geometry = geometry; state.filename = file.name;
-    $('model-name').textContent = 'Local SWC';
-    $('file-status').classList.remove('error');
-    $('file-status').textContent = `${file.name}: ${number(parsed.originalPoints)} original points; ${number(geometry.nodes.length)} cable nodes after refinement. All cable types included. Soma area is fixed and excluded from the cable-material comparison. Only a passive geometric illustration; anatomy and radius calibration are not validated by this upload.`;
-    $('restore-y').hidden = false;
-    $('branch-help').textContent = 'The selected branch is the terminal branch leading to the farthest cable tip. Both multipliers apply there. Lengths, soma area and membrane densities stay fixed.';
-    requestSimulation();
-  } catch (error) {$('file-status').textContent = error.message; $('file-status').classList.add('error');}
-  event.target.value = '';
-});
-$('restore-y').addEventListener('click', () => {
-  state.geometry = makeY(); state.filename = ''; $('model-name').textContent = 'Ideal Y cable'; $('restore-y').hidden = true;
-  $('file-status').textContent = 'A single root soma marker is a sphere; cable attachments use child radii. All cable types are passive. Multi-point somata are not supported.';
-  $('file-status').classList.remove('error'); $('branch-help').textContent = 'The selected branch is daughter B. Both multipliers apply there. Lengths and membrane densities stay fixed.';
-  requestSimulation();
-});
-$('download').addEventListener('click', () => {
-  if (!state.results) return;
-  const {baseTrace: base, modifiedTrace: modified} = state.results;
-  const lines = ['time_ms,baseline_root_mV,modified_root_mV,baseline_distal_A_mV,modified_distal_A_mV,baseline_distal_B_mV,modified_distal_B_mV'];
-  for (let j = 0; j < base.count; j++) lines.push([base.time[j], base.root[j], modified.root[j], base.a[j], modified.a[j], base.b[j], modified.b[j]].map(v => v.toPrecision(12)).join(','));
-  const blob = new Blob([lines.join('\n') + '\n'], {type: 'text/csv'}), url = URL.createObjectURL(blob), anchor = document.createElement('a');
-  anchor.href = url; anchor.download = 'passive-cable-traces.csv'; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
-new ResizeObserver(draw).observe($('tree')); new ResizeObserver(draw).observe($('traces'));
-requestSimulation(); requestAnimationFrame(animate);
+const palette = {ink:'#292b28',muted:'#74766d',rule:'#dedbd0',paper:'#faf8f2',rust:'#a24d34',sage:'#667d60',blue:'#385d79'};
+const state = {result:null,view:'candidate',projection:'xy',phase:0,playing:false,lastClock:null,lastDraw:0,zoom:1,panX:0,panY:0,projected:null,recordings:new Set([0,3,4]),request:0,ready:false,pending:false};
+const worker = new Worker(new URL('./harmonic-worker.mjs',import.meta.url),{type:'module'});
+let debounce;
+const format = (value,digits=3) => new Intl.NumberFormat('en',{maximumSignificantDigits:digits}).format(value);
+const signed = value => `${value>=0?'+':'−'}${format(Math.abs(value))}`;
+const percent = value => `${format(100*value,4)}%`;
+const label = p => `${p.id} · ${p.label.replace(/([a-z])([A-Z])/g,'$1 $2')}`;
+const modeName = mode => ({baseline:'Unchanged-copy control',uniform:'Uniform thinning',selective:'Selective subtree thinning'}[mode]);
+function payload(){const frequencyHz=FREQUENCIES[Number($('frequency').value)];return {model:$('model').value,preset:$('preset').value,frequencyHz,amplitudePA:Number($('amplitude').value),phaseDeg:frequencyHz===0?0:Number($('input-phase').value),inputPort:Number($('input-port').value||4),subdivisions:4,includeSpectrum:true};}
+function updateOutputs(){const f=FREQUENCIES[Number($('frequency').value)];$('frequency-value').textContent=f===0?'0 Hz · DC':`${f} Hz`;$('amplitude-value').textContent=`${Number($('amplitude').value).toFixed(1)} pA`;$('input-phase-value').textContent=f===0?'0° · DC':`${$('input-phase').value}°`;$('input-phase').disabled=f===0;$('cycle-phase').disabled=f===0;$('play').disabled=f===0||!state.ready;$('geometry-note').textContent=$('model').value==='allen'?'Retained apical and basal dendrites; soma fixed. Axon excluded.':'Three cylindrical cables, 400 µm each; one shared junction and sealed ends.';$('allocation-note').textContent=$('model').value==='allen'?'The orange outline identifies the selected basal subtree.':'The orange outline identifies the selected daughter cable.';}
+function setPlaying(play){state.playing=play;state.lastClock=null;$('play').innerHTML=play?'Ⅱ <span>Pause cycle</span>':'▶ <span>Play cycle</span>';$('play').setAttribute('aria-label',play?'Pause the periodic steady-state response':'Play the periodic steady-state response');}
+function requestCalculation(resetView=false){clearTimeout(debounce);updateOutputs();setPlaying(false);if(resetView){state.zoom=1;state.panX=0;state.panY=0;state.projected=null;}state.pending=true;state.ready=false;$('status').classList.remove('error');$('status').textContent='Solving the original and modified arbors in your browser…';$('export-csv').disabled=true;$('export-settings').disabled=true;$('play').disabled=true;$('model-loading').hidden=false;$('model-loading').textContent='Calculating the electrical response…';const id=++state.request;debounce=setTimeout(()=>{worker.postMessage({type:'compute',id,payload:payload()});},90);}
+worker.onmessage=({data})=>{if(data.id!==state.request)return;if(data.type==='error'){showError(data.message);return;}if(data.type!=='result')return;state.result=data.result;state.ready=true;state.pending=false;state.phase=0;state.projected=null;$('cycle-phase').value='0';populatePorts();updateOutputs();renderNumbers();$('model-loading').hidden=true;$('export-csv').disabled=false;$('export-settings').disabled=false;$('status').textContent=`Calculated locally · ${format(state.result.mesh.nodeCount,6)} electrical nodes · seven fixed ports · harmonic steady state`;$('arbor').setAttribute('aria-label',`${$('model').value==='allen'?'Allen reconstructed mouse cortical neuron':'Ideal Y cable'}, ${state.result.mesh.nodeCount} electrical nodes. Calculated ${state.view} voltage field at ${state.result.frequencyHz} Hz. Click a labeled port to set the input.`);drawAll();};
+worker.onerror=()=>showError('The calculation worker could not start. Use the hosted page or a local HTTP server; opening this file directly is unsupported.');
+function showError(message){state.ready=false;state.pending=false;setPlaying(false);$('status').textContent=message;$('status').classList.add('error');$('model-loading').hidden=false;$('model-loading').textContent='Calculation unavailable. See the message below.';}
+function populatePorts(){const r=state.result,current=String(r.inputPort);$('input-port').replaceChildren(...r.ports.map((p,i)=>{const option=document.createElement('option');option.value=i;option.textContent=label(p);return option;}));$('input-port').value=current;$('recording-sites').replaceChildren(...r.ports.map((p,i)=>{const item=document.createElement('label'),check=document.createElement('input'),code=document.createElement('span'),name=document.createElement('span');check.type='checkbox';check.value=i;check.checked=state.recordings.has(i);check.setAttribute('aria-label',`Record ${label(p)}`);check.addEventListener('change',()=>{if(check.checked)state.recordings.add(i);else state.recordings.delete(i);drawWaveforms();});code.className='port-code';code.textContent=p.id;name.textContent=p.label.replace(/([a-z])([A-Z])/g,'$1 $2');item.append(check,code,name);return item;}));}
+function renderNumbers(){const r=state.result,base=r.materials.baseline,mod=r.materials.candidate;$('arbor-title').textContent=r.model==='allen'?'The reconstructed arbor':'A branching cable';$('model-id').textContent=r.model==='allen'?'MOUSE VISUAL CORTEX · LAYER 5 · ALLEN 588402092':'AN IDEAL PASSIVE Y · THREE CYLINDERS';$('mesh-label').textContent=r.model==='allen'?'4 per retained edge':'128 per half cable';const rows=[['Dendritic volume','dendriticVolumeUm3','µm³'],['Dendritic membrane area','dendriticAreaUm2','µm²'],['Whole-model volume','totalVolumeUm3','µm³'],['Membrane capacitance','capacitancePF','pF']];$('material-values').innerHTML=rows.map(([name,key,unit])=>`<tr><td>${name}</td><td>${format(base[key],5)} <span>${unit}</span></td><td>${format(mod[key],5)} <span>${unit}</span></td></tr>`).join('');const dend=1-mod.dendriticVolumeUm3/base.dendriticVolumeUm3,total=1-mod.totalVolumeUm3/base.totalVolumeUm3;$('material-note').textContent=`${percent(dend)} less dendritic volume; ${percent(total)} less whole-model volume. ${r.model==='allen'?'The soma stays fixed.':'This ideal cable has no soma sphere.'} Surface area follows the specified cable geometry.`;$('metric-context').textContent=`Seven collocated input/output ports · ${r.frequencyHz===0?'DC':`${r.frequencyHz} Hz`} · ${modeName(r.preset)}`;const rootName=r.model==='allen'?'Somatic':'Root';$('root-definition-label').textContent=`${rootName} gain change`;$('root-definition-equation').textContent=r.model==='allen'?'‖D[soma, :]‖₂ / ‖Z₀‖₂':'‖D[root, :]‖₂ / ‖Z₀‖₂';$('root-frequency-legend').innerHTML=`<i class="line somatic"></i>${rootName} gain change`;const metrics=[[`${rootName} gain change`,'somaticGain','somatic'],['Distributed gain change','distributedGain','distributed'],['Response-relative change','responseRelative','relative']];$('metric-values').innerHTML=metrics.map(([name,key,color])=>`<div class="metric-row"><span>${name}</span><strong class="metric-${color}">${percent(r.metrics[key])}</strong><small>${r.metrics[key]<=.05?'Within':'Above'} the 5% engineering comparison at this frequency</small></div>`).join('');$('spectrum-label').textContent=`${modeName(r.preset)} · eight solved frequencies`;$('wave-title').textContent=r.frequencyHz===0?'Several viewpoints at DC':'One cycle, several viewpoints';$('waveform-caption').textContent=r.frequencyHz===0?'A constant input produces these steady voltages. Horizontal lines show DC response; there is no cycle to animate.':'Each row has its own labeled voltage scale. Curves are reconstructed from complex steady-state solutions at unshifted physical times.';}
+function context(canvas,height){if(height!==undefined&&canvas.style.height!==`${height}px`)canvas.style.height=`${height}px`;const box=canvas.getBoundingClientRect(),ratio=Math.min(window.devicePixelRatio||1,2),width=box.width,h=box.height;if(canvas.width!==Math.round(width*ratio)||canvas.height!==Math.round(h*ratio)){canvas.width=Math.round(width*ratio);canvas.height=Math.round(h*ratio);}const ctx=canvas.getContext('2d');ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,width,h);return {ctx,width,height:h};}
+function computeProjection(width,height){const r=state.result,key=`${width},${height},${state.projection},${state.zoom},${state.panX},${state.panY},${r.model}`;if(state.projected?.key===key)return state.projected;const xyz=r.fullField.xyz,n=xyz.length/3,axis={xy:[0,1],xz:[0,2],yz:[1,2]}[state.projection],[ax,ay]=axis;let xmin=Infinity,xmax=-Infinity,ymin=Infinity,ymax=-Infinity;for(let i=0;i<n;i++){xmin=Math.min(xmin,xyz[3*i+ax]);xmax=Math.max(xmax,xyz[3*i+ax]);ymin=Math.min(ymin,xyz[3*i+ay]);ymax=Math.max(ymax,xyz[3*i+ay]);}const padX=width<420?40:72,padY=42;const scale=Math.min((width-2*padX)/Math.max(1,xmax-xmin),(height-2*padY)/Math.max(1,ymax-ymin))*state.zoom;const centerX=(xmin+xmax)/2,centerY=(ymin+ymax)/2,px=new Float32Array(n),py=new Float32Array(n);for(let i=0;i<n;i++){px[i]=width/2+(xyz[3*i+ax]-centerX)*scale+state.panX;py[i]=height/2-(xyz[3*i+ay]-centerY)*scale+state.panY;}return state.projected={key,px,py,scale,width,height};}
+const colorMap=Array.from({length:65},(_,i)=>{const t=i/64,s=t<.5?t*2:(t-.5)*2,a=t<.5?[54,94,125]:[145,153,136],b=t<.5?[145,153,136]:[169,84,57];return `rgb(${a.map((v,j)=>Math.round(v+(b[j]-v)*s)).join(',')})`;});
+function fieldRange(){const r=state.result;let max=0;for(const field of state.view==='difference'?[r.difference]:[r.baseline,r.candidate])for(let i=0;i<field.voltageRe.length;i++)max=Math.max(max,Math.hypot(field.voltageRe[i],field.voltageIm[i]));return max||1e-6;}
+function drawArbor(){const {ctx,width,height}=context($('arbor'));if(!state.result||width<10)return;const r=state.result,p=computeProjection(width,height),field=r[state.view],phase=r.frequencyHz===0?0:state.phase*Math.PI/180,co=Math.cos(phase),si=Math.sin(phase),range=fieldRange(),parent=r.fullField.parent,positions=r.fullField.sourceToMesh||r.mesh.sourceToMesh;const selected=r.geometry.nodes;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';// The outline marks selected physical edges; voltage colors still use calculated fields.
+ctx.strokeStyle='#b2694466';ctx.lineWidth=r.model==='allen'?3.6:8;ctx.beginPath();for(let j=1;j<selected.length;j++){const edge=selected[j];if(!edge.selected)continue;const i=positions[j],a=positions[edge.parent];ctx.moveTo(p.px[a],p.py[a]);ctx.lineTo(p.px[i],p.py[i]);}ctx.stroke();const paths=Array.from({length:65},()=>new Path2D());for(let i=1;i<parent.length;i++){const a=parent[i],v=((field.voltageRe[i]+field.voltageRe[a])*co-(field.voltageIm[i]+field.voltageIm[a])*si)/2,bin=Math.max(0,Math.min(64,Math.round((v/range+1)*32)));paths[bin].moveTo(p.px[a],p.py[a]);paths[bin].lineTo(p.px[i],p.py[i]);}ctx.lineWidth=r.model==='allen'?1.3:4.3;for(let i=0;i<65;i++){ctx.strokeStyle=colorMap[i];ctx.stroke(paths[i]);}if(r.model==='allen'){const root=r.ports[0].nodeIndex;ctx.beginPath();ctx.arc(p.px[root],p.py[root],5,0,Math.PI*2);ctx.fillStyle=colorMap[Math.max(0,Math.min(64,Math.round(((field.voltageRe[root]*co-field.voltageIm[root]*si)/range+1)*32)))];ctx.fill();ctx.strokeStyle=palette.ink;ctx.lineWidth=.6;ctx.stroke();}ctx.restore();drawPorts(ctx,p);const length=p.scale*100;if(length>15&&length<width*.45){const x=width-length-14,y=height-18;ctx.strokeStyle=palette.muted;ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(x,y-3);ctx.lineTo(x,y+3);ctx.moveTo(x,y);ctx.lineTo(x+length,y);ctx.moveTo(x+length,y-3);ctx.lineTo(x+length,y+3);ctx.stroke();ctx.fillStyle=palette.muted;ctx.font='9px Arial, sans-serif';ctx.textAlign='center';ctx.fillText('100 µm',x+length/2,y-7);}ctx.textAlign='left';ctx.font='9px Arial, sans-serif';ctx.fillStyle=palette.muted;ctx.fillText(`${state.projection.toUpperCase()} projection · retained centerlines`,9,height-10);$('color-min').textContent=`−${format(range)} mV`;$('color-max').textContent=`+${format(range)} mV`;$('color-caption').textContent=state.view==='difference'?'Modified minus original · symmetric difference scale':'Voltage relative to rest · same scale for original and modified';$('field-label').textContent={baseline:'Original − rest',candidate:'Modified − rest',difference:'Modified − original'}[state.view];}
+function drawPorts(ctx,p){const r=state.result,side={left:[],right:[]};for(let i=0;i<r.ports.length;i++){const port=r.ports[i],x=p.px[port.nodeIndex],y=p.py[port.nodeIndex];side[x<p.width*.5?'left':'right'].push({i,x,y,labelY:y});}for(const [key,list]of Object.entries(side)){list.sort((a,b)=>a.y-b.y);for(let j=0;j<list.length;j++)list[j].labelY=Math.max(24,Math.min(p.height-40,Math.max(list[j].y,j?list[j-1].labelY+19:24)));for(let j=list.length-2;j>=0;j--)list[j].labelY=Math.min(list[j].labelY,list[j+1].labelY-19);for(const item of list){const {i,x,y,labelY}=item,input=i===r.inputPort,code=r.ports[i].id;ctx.beginPath();ctx.arc(x,y,input?6:3.1,0,2*Math.PI);ctx.fillStyle=palette.paper;ctx.fill();ctx.lineWidth=input?1.7:1;ctx.strokeStyle=input?palette.rust:palette.ink;ctx.stroke();const tx=key==='left'?Math.max(10,x-30):Math.min(p.width-12,x+31),end=key==='left'?tx+14:tx-14;ctx.beginPath();ctx.moveTo(x+(key==='left'?-7:7),y);ctx.lineTo(end,labelY-2);ctx.strokeStyle='#99978c';ctx.lineWidth=.6;ctx.stroke();ctx.fillStyle=input?palette.rust:palette.ink;ctx.font=`${input?'bold ':''}10px Arial, sans-serif`;ctx.textAlign=key==='left'?'right':'left';ctx.fillText(code,tx,labelY+2);item.labelX=tx;}}state.portHits=Object.values(side).flat();}
+function at(field,index,angle){return field.voltageRe[index]*Math.cos(angle)-field.voltageIm[index]*Math.sin(angle);}
+function drawWaveforms(){const r=state.result;if(!r)return;const selected=[...state.recordings].sort((a,b)=>a-b),rowH=116,{ctx,width,height}=context($('waveforms'),Math.max(135,selected.length*rowH+39));if(!selected.length){ctx.font='15px Georgia, serif';ctx.fillStyle=palette.muted;ctx.fillText('Choose an observation site in the experiment controls.',15,50);return;}const left=56,right=15,w=width-left-right,period=r.frequencyHz===0?1:1000/r.frequencyHz;ctx.font='9px Arial, sans-serif';for(let row=0;row<selected.length;row++){const port=r.ports[selected[row]],index=port.nodeIndex,top=row*rowH+34,h=73,baseAmp=Math.hypot(r.baseline.voltageRe[index],r.baseline.voltageIm[index]),modAmp=Math.hypot(r.candidate.voltageRe[index],r.candidate.voltageIm[index]),diffAmp=Math.hypot(r.difference.voltageRe[index],r.difference.voltageIm[index]),max=Math.max(baseAmp,modAmp,diffAmp)*1.13||.001;const x=t=>left+t*w,y=v=>top+h/2-v/max*h/2;ctx.fillStyle=palette.ink;ctx.textAlign='left';ctx.font='10px Arial, sans-serif';ctx.fillText(label(port),left,row*rowH+17);ctx.textAlign='right';ctx.fillStyle=palette.muted;ctx.font='9px Arial, sans-serif';ctx.fillText(`|ΔV| ${format(diffAmp)} mV`,width-right,row*rowH+17);for(const tick of[-1,0,1]){const yy=y(tick*max);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(width-right,yy);ctx.strokeStyle=tick===0?'#cfcbbf':'#e7e3d9';ctx.lineWidth=.6;ctx.stroke();ctx.textAlign='right';ctx.fillStyle=palette.muted;ctx.fillText(tick===0?'0':signed(tick*max),left-8,yy+3);}for(const[name,color,dash]of[['baseline',palette.ink,[4,4]],['candidate',palette.rust,[]],['difference',palette.sage,[]]]){ctx.beginPath();for(let j=0;j<=240;j++){const angle=r.frequencyHz===0?0:j/240*2*Math.PI,v=at(r[name],index,angle);if(j===0)ctx.moveTo(x(0),y(v));else ctx.lineTo(x(j/240),y(v));}ctx.strokeStyle=color;ctx.lineWidth=name==='difference'?1:1.45;ctx.setLineDash(dash);ctx.stroke();}ctx.setLineDash([]);if(r.frequencyHz!==0){const xx=x(state.phase/360);ctx.beginPath();ctx.moveTo(xx,top);ctx.lineTo(xx,top+h);ctx.strokeStyle='#b3b4a7';ctx.lineWidth=.7;ctx.stroke();}}const lastTop=(selected.length-1)*rowH+34,lastBottom=lastTop+73;ctx.font='9px Arial, sans-serif';ctx.fillStyle=palette.muted;ctx.textAlign='center';for(let j=0;j<=4;j++)ctx.fillText(r.frequencyHz===0?`${j/4}`:format(period*j/4),left+j/4*w,lastBottom+18);ctx.fillText(r.frequencyHz===0?'Steady DC response (horizontal coordinate has no time dependence)':'Time within a periodic steady state (ms)',left+w/2,height-4);ctx.save();ctx.translate(10,Math.min(height/2,125));ctx.rotate(-Math.PI/2);ctx.fillText('Voltage relative to rest (mV)',0,0);ctx.restore();}
+function drawFrequency(){const {ctx,width,height}=context($('frequency-plot'));if(!state.result?.spectrum)return;const data=state.result.spectrum,left=50,right=21,top=12,bottom=43,w=width-left-right,h=height-top-bottom;const max=Math.max(6,...data.flatMap(s=>[100*s.somaticGain,100*s.distributedGain,100*s.responseRelative]))*1.13;const log=f=>Math.log10(1+f),x=f=>left+log(f)/log(100)*w,y=v=>top+h-v/max*h;ctx.font='9px Arial, sans-serif';ctx.fillStyle=palette.muted;ctx.textAlign='right';for(let j=0;j<=4;j++){const value=max*j/4,yy=y(value);ctx.beginPath();ctx.moveTo(left,yy);ctx.lineTo(width-right,yy);ctx.strokeStyle=palette.rule;ctx.lineWidth=.6;ctx.stroke();ctx.fillText(format(value),left-9,yy+3);}ctx.textAlign='center';for(const f of FREQUENCIES)ctx.fillText(String(f),x(f),height-bottom+18);ctx.fillText('Frequency (Hz; log(1 + f) spacing)',left+w/2,height-5);ctx.save();ctx.translate(11,top+h/2);ctx.rotate(-Math.PI/2);ctx.fillText('Electrical change (%)',0,0);ctx.restore();ctx.beginPath();ctx.moveTo(left,y(5));ctx.lineTo(width-right,y(5));ctx.setLineDash([4,4]);ctx.strokeStyle='#9b9587';ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);for(const[key,color]of[['somaticGain',palette.blue],['distributedGain',palette.sage],['responseRelative',palette.rust]]){ctx.beginPath();data.forEach((s,i)=>{if(i===0)ctx.moveTo(x(s.frequencyHz),y(100*s[key]));else ctx.lineTo(x(s.frequencyHz),y(100*s[key]));});ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();for(const s of data){ctx.beginPath();ctx.arc(x(s.frequencyHz),y(100*s[key]),2.5,0,2*Math.PI);ctx.fillStyle=color;ctx.fill();}}const selected=x(state.result.frequencyHz);ctx.beginPath();ctx.moveTo(selected,top);ctx.lineTo(selected,top+h);ctx.strokeStyle='#b3b4a7';ctx.setLineDash([2,3]);ctx.lineWidth=.8;ctx.stroke();ctx.setLineDash([]);}
+function drawAll(){if(!state.result)return;drawArbor();drawWaveforms();drawFrequency();updateClock();}
+function updateClock(){const r=state.result;if(!r)return;$('frame-phase').textContent=r.frequencyHz===0?'DC':`${Math.round(state.phase)}°`;$('cycle-phase').value=state.phase;$('cycle-time').textContent=r.frequencyHz===0?'steady':`${format(state.phase/360*1000/r.frequencyHz,4)} ms`;}
+function drawFrame(){drawArbor();drawWaveforms();updateClock();}
+function animate(time){if(state.playing&&state.ready&&state.result?.frequencyHz>0){if(state.lastClock!==null)state.phase=(state.phase+Math.min(time-state.lastClock,100)*.06)%360;state.lastClock=time;if(time-state.lastDraw>42){drawFrame();state.lastDraw=time;}}requestAnimationFrame(animate);}
+function download(filename,text,type){const url=URL.createObjectURL(new Blob([text],{type})),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function exportCsv(){if(!state.ready)return;const r=state.result,header=['time_ms','cycle_phase_deg',...r.ports.flatMap(p=>[`${p.id}_original_mV`,`${p.id}_modified_mV`,`${p.id}_difference_mV`])],lines=[header.join(',')],count=r.frequencyHz===0?1:361;for(let k=0;k<count;k++){const angle=k*Math.PI/180,values=[r.frequencyHz===0?0:k/360*1000/r.frequencyHz,k];for(const p of r.ports)for(const field of['baseline','candidate','difference'])values.push(at(r[field],p.nodeIndex,angle));lines.push(values.map(v=>Number(v).toPrecision(12)).join(','));}download(`passive-${r.model}-${r.preset}-${r.frequencyHz}Hz-steady-state.csv`,lines.join('\n')+'\n','text/csv');}
+$('export-csv').addEventListener('click',exportCsv);
+$('export-settings').addEventListener('click',()=>{if(!state.ready)return;const r=state.result;download(`passive-${r.model}-${r.preset}-settings.json`,JSON.stringify({schemaVersion:1,response:'harmonic periodic steady state',settings:payload(),view:{field:state.view,projection:state.projection,observationPortIds:[...state.recordings].map(i=>r.ports[i].id)},source:r.geometry.source,mesh:r.mesh,ports:r.ports,materials:r.materials,metrics:r.metrics,spectrum:r.spectrum,units:{voltage:'mV relative to rest',frequency:'Hz',current:'pA',length:'µm'},scope:'Passive model; seven-port metrics; no biological energy accounting. Animation is a periodic phasor reconstruction, not a transient.'},null,2)+'\n','application/json');});
+for(const id of['preset','input-port'])$(id).addEventListener('change',()=>requestCalculation());
+for(const id of['frequency','amplitude','input-phase'])$(id).addEventListener('input',()=>requestCalculation());
+$('model').addEventListener('change',()=>{state.recordings=new Set([0,3,4]);requestCalculation(true);});
+$('projection').addEventListener('change',()=>{state.projection=$('projection').value;state.zoom=1;state.panX=0;state.panY=0;state.projected=null;drawArbor();});
+for(const button of document.querySelectorAll('[data-view]'))button.addEventListener('click',()=>{state.view=button.dataset.view;for(const b of document.querySelectorAll('[data-view]')){b.classList.toggle('active',b===button);b.setAttribute('aria-pressed',String(b===button));}drawArbor();});
+$('cycle-phase').addEventListener('input',()=>{setPlaying(false);state.phase=Number($('cycle-phase').value);drawFrame();});
+$('play').addEventListener('click',()=>setPlaying(!state.playing));
+$('fit').addEventListener('click',()=>{state.zoom=1;state.panX=0;state.panY=0;state.projected=null;drawArbor();});
+$('reset').addEventListener('click',()=>{$('model').value='allen';$('preset').value='selective';$('frequency').value='4';$('amplitude').value='1';$('input-phase').value='0';$('input-port').value='4';$('projection').value='xy';state.projection='xy';state.recordings=new Set([0,3,4]);state.view='candidate';for(const b of document.querySelectorAll('[data-view]')){b.classList.toggle('active',b.dataset.view==='candidate');b.setAttribute('aria-pressed',String(b.dataset.view==='candidate'));}requestCalculation(true);});
+let drag=null;const canvas=$('arbor');canvas.addEventListener('pointerdown',event=>{drag={x:event.clientX,y:event.clientY,px:state.panX,py:state.panY,moved:false};canvas.setPointerCapture(event.pointerId);canvas.classList.add('dragging');});canvas.addEventListener('pointermove',event=>{if(!drag)return;const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>3)drag.moved=true;if(drag.moved){state.panX=drag.px+dx;state.panY=drag.py+dy;state.projected=null;drawArbor();}});canvas.addEventListener('pointerup',event=>{if(drag&&!drag.moved&&state.ready){const rect=canvas.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;let hit=null,best=23;for(const p of state.portHits||[]){const d=Math.min(Math.hypot(x-p.x,y-p.y),Math.hypot(x-p.labelX,y-p.labelY));if(d<best){hit=p;best=d;}}if(hit){$('input-port').value=hit.i;requestCalculation();}}drag=null;canvas.classList.remove('dragging');});canvas.addEventListener('pointercancel',()=>{drag=null;canvas.classList.remove('dragging');});canvas.addEventListener('wheel',event=>{if(!state.result)return;event.preventDefault();const rect=canvas.getBoundingClientRect(),cx=event.clientX-rect.left-rect.width/2,cy=event.clientY-rect.top-rect.height/2,old=state.zoom,next=Math.max(.6,Math.min(7,old*Math.exp(-event.deltaY*.001))),ratio=next/old;state.panX=cx-(cx-state.panX)*ratio;state.panY=cy-(cy-state.panY)*ratio;state.zoom=next;state.projected=null;drawArbor();},{passive:false});canvas.addEventListener('keydown',event=>{if(['+','=','-','0'].includes(event.key)){event.preventDefault();state.zoom=event.key==='0'?1:Math.max(.6,Math.min(7,state.zoom*(event.key==='-'?.85:1.18)));if(event.key==='0'){state.panX=0;state.panY=0;}state.projected=null;drawArbor();}});
+new ResizeObserver(()=>{state.projected=null;drawAll();}).observe($('arbor'));new ResizeObserver(()=>{drawWaveforms();drawFrequency();}).observe($('frequency-plot'));
+// Read-only access to saved settings/results supports deterministic browser checks.
+Object.defineProperty(window,'__cableLabDebug',{value:Object.freeze({getState:()=>({ready:state.ready,pending:state.pending,request:state.request,view:state.view,phase:state.phase,settings:payload(),result:state.result,recordingPortIndices:[...state.recordings]})}),writable:false});
+updateOutputs();requestCalculation();requestAnimationFrame(animate);
